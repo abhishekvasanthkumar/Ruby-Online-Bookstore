@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Store</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+</head>
+<body class='shopper'>
+
+	<div id="banner">
+	<%= image_tag("logo.png") %>
+	<%= @page_title || "COEN 279: Book Store Assigment - 5" %>
+  <form>
+    <input type="text" name="search" placeholder="Search Books">
+    <button type="Submit">Search</button>
+    <button><a href="/login" class="admin-login">Admin Login</a></button>
+  </form>
+	</div>
+
+  <div id="columns">
+    <div id="side">
+      <div id="cart">
+        <% unless @cart.blank? %>
+          <%= render @cart %>
+        <%end%>
+      </div>
+      <% if session[:user_id] %>
+<ul id ="admin-menu">
+          <li><%= link_to 'Orders',   orders_path   %></li>
+          <li><%= link_to 'Products', products_path %></li>
+          <li><%= link_to 'Users',    users_path    %></li>
+        </ul>
+<%= button_to 'Logout', logout_path, method: :delete   %>
+      <% end %>
+    </div>
+
+	<div id="main" class='<% controller.controller_name%>'>
+		<%= yield %>
+	</div>
+<div id="footer">
+<p>COEN 278: Advanced Web Programming</p>
+</body>
+</html>
